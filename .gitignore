@@ -9,6 +9,14 @@
 /MiveArchiver/obj/Debug/*
 /MiveArchiver/bin/Debug/*.*
 /MiveArchiver/obj/Debug/*.*
+
+MiveArchiver/bin/Debug/*
+MiveArchiver/obj/Debug/*
+MiveArchiver/bin/Debug/*.*
+MiveArchiver/obj/Debug/*.*
+.vs/*
+.vs/*.*
+
 /MiveArchiver/bin/Debug/MiveArchiver.exe
 /MiveArchiver/bin/Debug/MiveArchiver.pdb
 /MiveArchiver/obj/Debug/MiveArchiver.csproj.FileListAbsolute.txt
