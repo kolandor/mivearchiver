@@ -98,7 +98,6 @@ namespace MiveArchiver
             }
             finally
             {
-                //bar.Value = 0;
             }
         }
     }
