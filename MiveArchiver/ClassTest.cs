@@ -8,6 +8,7 @@ namespace MiveArchiver
 {
     class ClassTest
     {
+        public int I { get; private set; }
 		public void message()
 		{
 			Console.WriteLine("I'm forced to use Notepad++ Kill me please :/");
