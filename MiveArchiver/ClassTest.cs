@@ -8,5 +8,6 @@ namespace MiveArchiver
 {
     class ClassTest
     {
+        public int I { get; private set; }
     }
 }
