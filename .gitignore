@@ -7,6 +7,8 @@
 *.cache
 /MiveArchiver/bin/Debug/*
 /MiveArchiver/obj/Debug/*
+/MiveArchiver/bin/Debug/*.*
+/MiveArchiver/obj/Debug/*.*
 /MiveArchiver/bin/Debug/MiveArchiver.exe
 /MiveArchiver/bin/Debug/MiveArchiver.pdb
 /MiveArchiver/obj/Debug/MiveArchiver.csproj.FileListAbsolute.txt
@@ -18,6 +20,8 @@
 /.vs/MiveArchiver/v15/Server/sqlite3/storage.ide
 /.vs/MiveArchiver/v15/Server/sqlite3/storage.ide-shm
 /.vs/MiveArchiver/v15/Server/sqlite3/storage.ide-wal
+/.vs/*
+/.vs/*.*
 
 #Ignore thumbnails created by Windows
 Thumbs.db
@@ -47,9 +51,4 @@ _ReSharper*/
 .vs/
 #Nuget packages folder
 packages/
-/MiveArchiver/bin/Debug/MiveArchiver.exe
-/MiveArchiver/bin/Debug/MiveArchiver.pdb
-/MiveArchiver/obj/Debug/MiveArchiver.csproj.FileListAbsolute.txt
-/MiveArchiver/obj/Debug/MiveArchiver.csprojResolveAssemblyReference.cache
-/MiveArchiver/obj/Debug/MiveArchiver.exe
-/MiveArchiver/obj/Debug/MiveArchiver.pdb
+
