@@ -1,0 +1,29 @@
+C:\Users\ИЛЬЯ\Desktop\MiveArchiver\MiveArchiver\bin\Debug\MiveArchiver.exe.config
+C:\Users\ИЛЬЯ\Desktop\MiveArchiver\MiveArchiver\bin\Debug\MiveArchiver.exe
+C:\Users\ИЛЬЯ\Desktop\MiveArchiver\MiveArchiver\bin\Debug\MiveArchiver.pdb
+C:\Users\ИЛЬЯ\Desktop\MiveArchiver\MiveArchiver\obj\Debug\MiveArchiver.csprojResolveAssemblyReference.cache
+C:\Users\ИЛЬЯ\Desktop\MiveArchiver\MiveArchiver\obj\Debug\MiveArchiver.ArchiverForm.resources
+C:\Users\ИЛЬЯ\Desktop\MiveArchiver\MiveArchiver\obj\Debug\MiveArchiver.Properties.Resources.resources
+C:\Users\ИЛЬЯ\Desktop\MiveArchiver\MiveArchiver\obj\Debug\MiveArchiver.csproj.GenerateResource.Cache
+C:\Users\ИЛЬЯ\Desktop\MiveArchiver\MiveArchiver\obj\Debug\MiveArchiver.exe
+C:\Users\ИЛЬЯ\Desktop\MiveArchiver\MiveArchiver\obj\Debug\MiveArchiver.pdb
+C:\Users\Nikita\Documents\Visual Studio 2017\Projects\MiveArchiver\MiveArchiver\bin\Debug\MiveArchiver.exe.config
+C:\Users\Nikita\Documents\Visual Studio 2017\Projects\MiveArchiver\MiveArchiver\bin\Debug\MiveArchiver.exe
+C:\Users\Nikita\Documents\Visual Studio 2017\Projects\MiveArchiver\MiveArchiver\bin\Debug\MiveArchiver.pdb
+C:\Users\Nikita\Documents\Visual Studio 2017\Projects\MiveArchiver\MiveArchiver\obj\Debug\MiveArchiver.ArchiverForm.resources
+C:\Users\Nikita\Documents\Visual Studio 2017\Projects\MiveArchiver\MiveArchiver\obj\Debug\MiveArchiver.Properties.Resources.resources
+C:\Users\Nikita\Documents\Visual Studio 2017\Projects\MiveArchiver\MiveArchiver\obj\Debug\MiveArchiver.csproj.GenerateResource.cache
+C:\Users\Nikita\Documents\Visual Studio 2017\Projects\MiveArchiver\MiveArchiver\obj\Debug\MiveArchiver.csproj.CoreCompileInputs.cache
+C:\Users\Nikita\Documents\Visual Studio 2017\Projects\MiveArchiver\MiveArchiver\obj\Debug\MiveArchiver.exe
+C:\Users\Nikita\Documents\Visual Studio 2017\Projects\MiveArchiver\MiveArchiver\obj\Debug\MiveArchiver.pdb
+C:\Users\Nikita\Documents\Visual Studio 2017\Projects\MiveArchiver\MiveArchiver\obj\Debug\MiveArchiver.csprojAssemblyReference.cache
+C:\Users\Nick\source\repos\MiveArchiver\MiveArchiver\bin\Debug\MiveArchiver.exe.config
+C:\Users\Nick\source\repos\MiveArchiver\MiveArchiver\bin\Debug\MiveArchiver.exe
+C:\Users\Nick\source\repos\MiveArchiver\MiveArchiver\bin\Debug\MiveArchiver.pdb
+C:\Users\Nick\source\repos\MiveArchiver\MiveArchiver\obj\Debug\MiveArchiver.ArchiverForm.resources
+C:\Users\Nick\source\repos\MiveArchiver\MiveArchiver\obj\Debug\MiveArchiver.Properties.Resources.resources
+C:\Users\Nick\source\repos\MiveArchiver\MiveArchiver\obj\Debug\MiveArchiver.csproj.GenerateResource.Cache
+C:\Users\Nick\source\repos\MiveArchiver\MiveArchiver\obj\Debug\MiveArchiver.csproj.CoreCompileInputs.cache
+C:\Users\Nick\source\repos\MiveArchiver\MiveArchiver\obj\Debug\MiveArchiver.exe
+C:\Users\Nick\source\repos\MiveArchiver\MiveArchiver\obj\Debug\MiveArchiver.pdb
+C:\Users\Nick\source\repos\MiveArchiver\MiveArchiver\obj\Debug\MiveArchiver.csprojResolveAssemblyReference.cache
