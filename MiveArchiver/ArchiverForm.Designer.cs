@@ -35,13 +35,14 @@
             this.tbZip = new System.Windows.Forms.TextBox();
             this.tbUnzip = new System.Windows.Forms.TextBox();
             this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnUnzip
             // 
-            this.btnUnzip.Location = new System.Drawing.Point(422, 86);
+            this.btnUnzip.Location = new System.Drawing.Point(422, 76);
             this.btnUnzip.Name = "btnUnzip";
-            this.btnUnzip.Size = new System.Drawing.Size(88, 21);
+            this.btnUnzip.Size = new System.Drawing.Size(88, 20);
             this.btnUnzip.TabIndex = 1;
             this.btnUnzip.Text = "Unzip";
             this.btnUnzip.UseVisualStyleBackColor = true;
@@ -49,7 +50,7 @@
             // 
             // btnZip
             // 
-            this.btnZip.Location = new System.Drawing.Point(422, 29);
+            this.btnZip.Location = new System.Drawing.Point(422, 30);
             this.btnZip.Name = "btnZip";
             this.btnZip.Size = new System.Drawing.Size(88, 20);
             this.btnZip.TabIndex = 2;
@@ -75,7 +76,7 @@
             // 
             // tbUnzip
             // 
-            this.tbUnzip.Location = new System.Drawing.Point(14, 87);
+            this.tbUnzip.Location = new System.Drawing.Point(14, 76);
             this.tbUnzip.Name = "tbUnzip";
             this.tbUnzip.ReadOnly = true;
             this.tbUnzip.Size = new System.Drawing.Size(387, 20);
@@ -83,16 +84,27 @@
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(14, 135);
+            this.progressBar.Location = new System.Drawing.Point(14, 124);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(496, 23);
+            this.progressBar.Size = new System.Drawing.Size(387, 23);
             this.progressBar.TabIndex = 5;
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Location = new System.Drawing.Point(422, 124);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(88, 23);
+            this.btnCancel.TabIndex = 6;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // ArchiverForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(522, 181);
+            this.ClientSize = new System.Drawing.Size(522, 172);
+            this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.tbUnzip);
             this.Controls.Add(this.tbZip);
@@ -101,6 +113,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "ArchiverForm";
             this.Text = "Mive Archiver";
+            this.Load += new System.EventHandler(this.ArchiverForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -114,6 +127,7 @@
         private System.Windows.Forms.TextBox tbZip;
         private System.Windows.Forms.TextBox tbUnzip;
         private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.Button btnCancel;
     }
 }
 

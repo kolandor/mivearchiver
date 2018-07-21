@@ -5,35 +5,53 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.ComponentModel;
+using System.Threading;
 
 namespace MiveArchiver
 {
     public class Archiver : IArchiver
     {
+        private Thread compressing_thread;
+        private Thread progress_thread;
         public void Compress(string sourceFile, string compressedFile, ProgressBar bar)
         {
             try
             {
-                bar.Value = 0; 
-                new Task( () =>
+                bar.Value = 0;
+                compressing_thread = new Thread(() =>
                 {
                     if (File.Exists(sourceFile))
                     {
                         using (FileStream sourceStream = new FileStream(sourceFile, FileMode.OpenOrCreate))
                         {
+                            bar.Value += 10;
                             using (FileStream targetStream = File.Create(compressedFile))
                             {
                                 using (GZipStream compressionStream = new GZipStream(targetStream, CompressionMode.Compress))
                                 {
-
-                                    new Task(() =>
+                                    progress_thread = new Thread(() =>
                                     {
+                                        long progress = 80;
                                         long source_length = new System.IO.FileInfo(sourceFile).Length;
-                                        long compressed_length = new System.IO.FileInfo(compressedFile).Length;
-                                        if ((source_length / 2) > compressed_length)
-                                            bar.Value += 100;
-                                    }).Start();
+                                        while (true)
+                                        {
+                                            if (progress > 0)
+                                            {
+                                                long compressed_length = new System.IO.FileInfo(compressedFile).Length;
+                                                if ((source_length / progress) < compressed_length)
+                                                {
+                                                    bar.Value += 10;
+                                                    progress -= 10;
+                                                }
+                                            }
+                                            else
+                                                break;
+                                        }
+                                    });
+                                    progress_thread.Start();
                                     sourceStream.CopyToAsync(compressionStream).Wait();
+                                    bar.Value += 10;
                                     MessageBox.Show("File has been compressed!");
                                     bar.Value = 0;
                                 }
@@ -44,7 +62,17 @@ namespace MiveArchiver
                     {
                         throw new Exception("Compressed file doesn't exist");
                     }
-                }).Start();
+               });
+               compressing_thread.Start();
+            }
+            catch (ThreadAbortException)
+            {
+                MessageBox.Show("Aborted!");
+                compressing_thread.Abort();
+                compressing_thread = null;
+                progress_thread.Abort();
+                progress_thread = null;
+                File.Delete(compressedFile);
             }
             catch (Exception ex)
             {
@@ -54,7 +82,6 @@ namespace MiveArchiver
             {
                 bar.Value = 0;
             }
-
         }
 
         public void Decompress(string compressedFile, string targetFile, ProgressBar bar)
@@ -74,12 +101,25 @@ namespace MiveArchiver
                                 {
                                     new Task(() =>
                                     {
+                                        long progress = 90;
                                         long compressed_length = new System.IO.FileInfo(compressedFile).Length;
-                                        long target_length = new System.IO.FileInfo(targetFile).Length;
-                                        if ((target_length / 2) < compressed_length)
-                                            bar.Value += 100;
+                                        while (true)
+                                        {
+                                            if (progress > 0)
+                                            {
+                                                long target_length = new System.IO.FileInfo(targetFile).Length;
+                                                if ((compressed_length / progress) < target_length)
+                                                {
+                                                    bar.Value += 10;
+                                                    progress -= 10;
+                                                }
+                                            }
+                                            else
+                                                break;
+                                        }
                                     }).Start();
                                     decompressionStream.CopyToAsync(targetStream).Wait();
+                                    bar.Value += 10;
                                     MessageBox.Show("File has been decompressed!");
                                     bar.Value = 0;
                                 }
@@ -98,7 +138,7 @@ namespace MiveArchiver
             }
             finally
             {
-
+                bar.Value = 0;
             }
         }
     }

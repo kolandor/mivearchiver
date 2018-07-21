@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static MiveArchiver.Program;
@@ -14,6 +15,7 @@ namespace MiveArchiver
 {
     public partial class ArchiverForm : Form
     {
+        private Thread ExecutionThread;
         public ArchiverForm()
         {
             InitializeComponent();
@@ -37,7 +39,10 @@ namespace MiveArchiver
 
                 // Creating the zipped file:
                 IArchiver arch = new Archiver();
-                arch.Compress(path_to_file, $"{folder_browser_dialogue.SelectedPath}\\{opdFileDialogZip.SafeFileName}.zip", progressBar);
+                ExecutionThread = new Thread(()=> {
+                    arch.Compress(path_to_file, $"{folder_browser_dialogue.SelectedPath}\\{opdFileDialogZip.SafeFileName}.zip", progressBar);
+                });
+                ExecutionThread.Start();
             }
             catch(Exception ex)
             {
@@ -72,6 +77,21 @@ namespace MiveArchiver
                 MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 MessageBox.Show(ex.StackTrace, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        void btnCancel_Click(object sender, EventArgs e)
+        {
+            if (ExecutionThread != null)
+            {
+                ExecutionThread.Abort();
+                ExecutionThread = null;
+                progressBar.Value = 0;
+            }
+        }
+
+        private void ArchiverForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
