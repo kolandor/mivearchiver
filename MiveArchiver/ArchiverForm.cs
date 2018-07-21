@@ -85,8 +85,8 @@ namespace MiveArchiver
             {
                 ExecutionThread.Abort();
                 ExecutionThread = null;
+                progressBar.Value = 0;
             }
-            progressBar.Value = 0;
         }
 
         private void ArchiverForm_Load(object sender, EventArgs e)

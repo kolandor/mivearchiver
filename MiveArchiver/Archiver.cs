@@ -20,52 +20,54 @@ namespace MiveArchiver
             {
                 bar.Value = 0;
                 compressing_thread = new Thread(() =>
-               {
-                   if (File.Exists(sourceFile))
-                   {
-                       using (FileStream sourceStream = new FileStream(sourceFile, FileMode.OpenOrCreate))
-                       {
-                           using (FileStream targetStream = File.Create(compressedFile))
-                           {
-                               using (GZipStream compressionStream = new GZipStream(targetStream, CompressionMode.Compress))
-                               {
-                                   progress_thread = new Thread(() =>
-                                   {
-                                       long progress = 90;
-                                       long source_length = new System.IO.FileInfo(sourceFile).Length;
-                                       while (true)
-                                       {
-                                           if (progress > 0)
-                                           {
-                                               long compressed_length = new System.IO.FileInfo(compressedFile).Length;
-                                               if ((source_length / progress) < compressed_length)
-                                               {
-                                                   bar.Value += 10;
-                                                   progress -= 10;
-                                               }
-                                           }
-                                           else
-                                               break;
-                                       }
-                                   });
-                                   progress_thread.Start();
-                                   sourceStream.CopyToAsync(compressionStream).Wait();
-                                   bar.Value += 10;
-                                   MessageBox.Show("File has been compressed!");
-                                   bar.Value = 0;
-                               }
-                           }
-                       }
-                   }
-                   else
-                   {
-                       throw new Exception("Compressed file doesn't exist");
-                   }
+                {
+                    if (File.Exists(sourceFile))
+                    {
+                        using (FileStream sourceStream = new FileStream(sourceFile, FileMode.OpenOrCreate))
+                        {
+                            bar.Value += 10;
+                            using (FileStream targetStream = File.Create(compressedFile))
+                            {
+                                using (GZipStream compressionStream = new GZipStream(targetStream, CompressionMode.Compress))
+                                {
+                                    progress_thread = new Thread(() =>
+                                    {
+                                        long progress = 80;
+                                        long source_length = new System.IO.FileInfo(sourceFile).Length;
+                                        while (true)
+                                        {
+                                            if (progress > 0)
+                                            {
+                                                long compressed_length = new System.IO.FileInfo(compressedFile).Length;
+                                                if ((source_length / progress) < compressed_length)
+                                                {
+                                                    bar.Value += 10;
+                                                    progress -= 10;
+                                                }
+                                            }
+                                            else
+                                                break;
+                                        }
+                                    });
+                                    progress_thread.Start();
+                                    sourceStream.CopyToAsync(compressionStream).Wait();
+                                    bar.Value += 10;
+                                    MessageBox.Show("File has been compressed!");
+                                    bar.Value = 0;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("Compressed file doesn't exist");
+                    }
                });
                compressing_thread.Start();
             }
             catch (ThreadAbortException)
             {
+                MessageBox.Show("Aborted!");
                 compressing_thread.Abort();
                 compressing_thread = null;
                 progress_thread.Abort();
