@@ -53,10 +53,18 @@
     <Compile Include="ArchiverForm.Designer.cs">
       <DependentUpon>ArchiverForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="CancelException.cs" />
     <Compile Include="IArchiver.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ThreadCompressFileData.cs" />
+    <Compile Include="UserZipAction.cs" />
+    <Compile Include="ZipProcessForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ZipProcessForm.Designer.cs">
+      <DependentUpon>ZipProcessForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="ArchiverForm.resx">
       <DependentUpon>ArchiverForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -69,6 +77,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ZipProcessForm.resx">
+      <DependentUpon>ZipProcessForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

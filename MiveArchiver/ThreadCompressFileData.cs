@@ -10,11 +10,14 @@ namespace MiveArchiver
     {
         public delegate void ProgressSet(long valueToUp);
 
+        public delegate void Finish();
+
         public string FileFrom { get; set; }
 
         public string FileTo { get; set; }
 
         public ProgressSet CompressProgressSet { get; set; }
 
+        public Finish CompressProgressFinish { get; set; }
     }
 }

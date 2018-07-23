@@ -22,12 +22,12 @@ namespace MiveArchiver
                 thread = null;
             }
         }
-        public void Compress(string sourceFile, string compressedFile, ProgressSet progressSet)
+        public void Compress(ThreadCompressFileData threadCompressFileData)
         {
             try
             {
                 thread = new Thread(ThreadMethodCompress);
-                thread.Start(new ThreadCompressFileData() { FileFrom = sourceFile, FileTo = compressedFile, CompressProgressSet = progressSet });
+                thread.Start(threadCompressFileData);
             }
             catch (Exception ex)
             {
@@ -35,7 +35,7 @@ namespace MiveArchiver
             }
             finally
             {
-                progressSet(0);
+                threadCompressFileData.CompressProgressSet.Invoke(0);
             }
         }
 
@@ -100,6 +100,7 @@ namespace MiveArchiver
             finally
             {
                 threadCompressData.CompressProgressSet.Invoke(0);
+                threadCompressData.CompressProgressFinish.Invoke();
             }
         }
 
@@ -164,15 +165,16 @@ namespace MiveArchiver
             finally
             {
                 threadCompressData.CompressProgressSet.Invoke(0);
+                threadCompressData.CompressProgressFinish.Invoke();
             }
         }
 
-        public void Decompress(string compressedFile, string targetFile, ProgressSet progressSet)
+        public void Decompress(ThreadCompressFileData threadCompressFileData)
         {
             try
             {
                 thread = new Thread(ThreadMethodDecompress);
-                thread.Start(new ThreadCompressFileData() { FileFrom = compressedFile, FileTo = targetFile, CompressProgressSet = progressSet });
+                thread.Start(threadCompressFileData);
                 /* new Task(() =>
                 {
                     if (File.Exists(compressedFile))
@@ -223,7 +225,7 @@ namespace MiveArchiver
             }
             finally
             {
-               progressSet(0);
+                threadCompressFileData.CompressProgressSet.Invoke(0);
             }
         }
     }

@@ -9,12 +9,12 @@ using static MiveArchiver.ThreadCompressFileData;
 
 namespace MiveArchiver
 {
-    interface IArchiver
+    public interface IArchiver
     {
         void CancelWork();
 
-        void Compress(string sourceFile, string compressedFile, ProgressSet progressSet);
+        void Compress(ThreadCompressFileData threadCompressFileData);
 
-        void Decompress(string compressedFile, string targetFile, ProgressSet progressSet);
+        void Decompress(ThreadCompressFileData threadCompressFileData);
     }
 }
