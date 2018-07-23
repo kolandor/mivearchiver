@@ -54,7 +54,7 @@ namespace MiveArchiver
                 pathToTargetFile = opdFileDialogZip.FileName;
 
                 // Filling the text-box with the path to the file to be zipped:
-                label1.Text = pathToTargetFile;
+                labelZipFile.Text = pathToTargetFile;
 
                 // Folder Selection:
                 folderBrowserDialogue = new FolderBrowserDialog();
@@ -98,7 +98,7 @@ namespace MiveArchiver
                 pathToTargetFile = opdFileDialogZip.FileName;
 
                 // Filling the text-box with the path to the file to be zipped:
-                label1.Text = pathToTargetFile;
+                labelZipFile.Text = pathToTargetFile;
 
                 // Folder Selection:
                 folderBrowserDialogue = new FolderBrowserDialog();

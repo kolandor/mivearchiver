@@ -175,49 +175,6 @@ namespace MiveArchiver
             {
                 thread = new Thread(ThreadMethodDecompress);
                 thread.Start(threadCompressFileData);
-                /* new Task(() =>
-                {
-                    if (File.Exists(compressedFile))
-                    {
-                        using (FileStream sourceStream = new FileStream(compressedFile, FileMode.OpenOrCreate))
-                        {
-                            using (FileStream targetStream = File.Create(targetFile))
-                            {
-                                using (GZipStream decompressionStream = new GZipStream(sourceStream, CompressionMode.Decompress))
-                                {
-                                    new Task(() =>
-                                    {
-                                        long progress = 90;
-                                        long compressed_length = new System.IO.FileInfo(compressedFile).Length;
-                                        while (true)
-                                        {
-                                            if (progress > 0)
-                                            {
-                                                long target_length = new System.IO.FileInfo(targetFile).Length;
-                                                if ((compressed_length / progress) < target_length)
-                                                {
-                                                    bar.Value += 10;
-                                                    progress -= 10;
-                                                }
-                                            }
-                                            else
-                                                break;
-                                        }
-                                    }).Start();
-                                    decompressionStream.CopyToAsync(targetStream).Wait();
-                                    bar.Value += 10;
-                                    MessageBox.Show("File has been decompressed!");
-                                    bar.Value = 0;
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        throw new Exception("Compressed file doesn't exist");
-                    }
-                }).Start(); */
-
             }
             catch (Exception ex)
             {
