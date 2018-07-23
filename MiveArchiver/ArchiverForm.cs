@@ -10,16 +10,25 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static MiveArchiver.Program;
+using static MiveArchiver.ThreadCompressFileData;
 
 namespace MiveArchiver
 {
     public partial class ArchiverForm : Form
     {
-        private Thread ExecutionThread;
         public ArchiverForm()
         {
             InitializeComponent();
         }
+
+        public void SetBarValue(long set_value)
+        {
+            if (set_value >= 0 && set_value <= 100)
+                progressBar.Value = (int)set_value;
+        }
+
+
+        private IArchiver arch;
 
         void btnZip_Click(object sender, EventArgs e)
         {
@@ -38,11 +47,9 @@ namespace MiveArchiver
                     return;
 
                 // Creating the zipped file:
-                IArchiver arch = new Archiver();
-                ExecutionThread = new Thread(()=> {
-                    arch.Compress(path_to_file, $"{folder_browser_dialogue.SelectedPath}\\{opdFileDialogZip.SafeFileName}.zip", progressBar);
-                });
-                ExecutionThread.Start();
+                arch = new Archiver();
+                ProgressSet progressSet = new ProgressSet(SetBarValue);
+                arch.Compress(path_to_file, $"{folder_browser_dialogue.SelectedPath}\\{opdFileDialogZip.SafeFileName}.zip", progressSet);
             }
             catch(Exception ex)
             {
@@ -69,8 +76,9 @@ namespace MiveArchiver
                 string new_name = Path.GetFileNameWithoutExtension(Path.Combine(folder_browser_dialogue.SelectedPath, opdFileDialogUnzip.SafeFileName));
 
                 // Creating the unzipped file:
-                IArchiver arch = new Archiver();
-                arch.Decompress(path_to_file, Path.Combine(folder_browser_dialogue.SelectedPath, new_name), progressBar);
+                arch = new Archiver();
+                ProgressSet progressSet = new ProgressSet(SetBarValue);
+                arch.Decompress(path_to_file, Path.Combine(folder_browser_dialogue.SelectedPath, new_name), progressSet);
             }
             catch (Exception ex)
             {
@@ -81,12 +89,8 @@ namespace MiveArchiver
 
         void btnCancel_Click(object sender, EventArgs e)
         {
-            if (ExecutionThread != null)
-            {
-                ExecutionThread.Abort();
-                ExecutionThread = null;
-                progressBar.Value = 0;
-            }
+            arch.CancelWork();
+            progressBar.Value = 0;
         }
 
         private void ArchiverForm_Load(object sender, EventArgs e)

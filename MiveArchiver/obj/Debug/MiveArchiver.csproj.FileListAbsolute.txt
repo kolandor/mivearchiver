@@ -37,3 +37,13 @@ C:\Users\Nick\Documents\GitProjects\mivearchiver\MiveArchiver\obj\Debug\MiveArch
 C:\Users\Nick\Documents\GitProjects\mivearchiver\MiveArchiver\obj\Debug\MiveArchiver.csproj.CoreCompileInputs.cache
 C:\Users\Nick\Documents\GitProjects\mivearchiver\MiveArchiver\obj\Debug\MiveArchiver.exe
 C:\Users\Nick\Documents\GitProjects\mivearchiver\MiveArchiver\obj\Debug\MiveArchiver.pdb
+C:\Users\Nikita\Documents\GitProjects\mivearchiver\MiveArchiver\bin\Debug\MiveArchiver.exe.config
+C:\Users\Nikita\Documents\GitProjects\mivearchiver\MiveArchiver\bin\Debug\MiveArchiver.exe
+C:\Users\Nikita\Documents\GitProjects\mivearchiver\MiveArchiver\bin\Debug\MiveArchiver.pdb
+C:\Users\Nikita\Documents\GitProjects\mivearchiver\MiveArchiver\obj\Debug\MiveArchiver.csprojAssemblyReference.cache
+C:\Users\Nikita\Documents\GitProjects\mivearchiver\MiveArchiver\obj\Debug\MiveArchiver.ArchiverForm.resources
+C:\Users\Nikita\Documents\GitProjects\mivearchiver\MiveArchiver\obj\Debug\MiveArchiver.Properties.Resources.resources
+C:\Users\Nikita\Documents\GitProjects\mivearchiver\MiveArchiver\obj\Debug\MiveArchiver.csproj.GenerateResource.cache
+C:\Users\Nikita\Documents\GitProjects\mivearchiver\MiveArchiver\obj\Debug\MiveArchiver.csproj.CoreCompileInputs.cache
+C:\Users\Nikita\Documents\GitProjects\mivearchiver\MiveArchiver\obj\Debug\MiveArchiver.exe
+C:\Users\Nikita\Documents\GitProjects\mivearchiver\MiveArchiver\obj\Debug\MiveArchiver.pdb

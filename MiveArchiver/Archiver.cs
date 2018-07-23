@@ -7,72 +7,27 @@ using System.Windows.Forms;
 using System.IO;
 using System.ComponentModel;
 using System.Threading;
+using static MiveArchiver.ThreadCompressFileData;
 
 namespace MiveArchiver
 {
     public class Archiver : IArchiver
     {
-        private Thread compressing_thread;
-        private Thread progress_thread;
-        public void Compress(string sourceFile, string compressedFile, ProgressBar bar)
+        private Thread thread;
+        public void CancelWork()
+        {
+            if(thread != null)
+            {
+                thread.Abort();
+                thread = null;
+            }
+        }
+        public void Compress(string sourceFile, string compressedFile, ProgressSet progressSet)
         {
             try
             {
-                bar.Value = 0;
-                compressing_thread = new Thread(() =>
-                {
-                    if (File.Exists(sourceFile))
-                    {
-                        using (FileStream sourceStream = new FileStream(sourceFile, FileMode.OpenOrCreate))
-                        {
-                            bar.Value += 10;
-                            using (FileStream targetStream = File.Create(compressedFile))
-                            {
-                                using (GZipStream compressionStream = new GZipStream(targetStream, CompressionMode.Compress))
-                                {
-                                    progress_thread = new Thread(() =>
-                                    {
-                                        long progress = 80;
-                                        long source_length = new System.IO.FileInfo(sourceFile).Length;
-                                        while (true)
-                                        {
-                                            if (progress > 0)
-                                            {
-                                                long compressed_length = new System.IO.FileInfo(compressedFile).Length;
-                                                if ((source_length / progress) < compressed_length)
-                                                {
-                                                    bar.Value += 10;
-                                                    progress -= 10;
-                                                }
-                                            }
-                                            else
-                                                break;
-                                        }
-                                    });
-                                    progress_thread.Start();
-                                    sourceStream.CopyToAsync(compressionStream).Wait();
-                                    bar.Value += 10;
-                                    MessageBox.Show("File has been compressed!");
-                                    bar.Value = 0;
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        throw new Exception("Compressed file doesn't exist");
-                    }
-               });
-               compressing_thread.Start();
-            }
-            catch (ThreadAbortException)
-            {
-                MessageBox.Show("Aborted!");
-                compressing_thread.Abort();
-                compressing_thread = null;
-                progress_thread.Abort();
-                progress_thread = null;
-                File.Delete(compressedFile);
+                thread = new Thread(ThreadMethodCompress);
+                thread.Start(new ThreadCompressFileData() { FileFrom = sourceFile, FileTo = compressedFile, CompressProgressSet = progressSet });
             }
             catch (Exception ex)
             {
@@ -80,16 +35,145 @@ namespace MiveArchiver
             }
             finally
             {
-                bar.Value = 0;
+                progressSet(0);
             }
         }
 
-        public void Decompress(string compressedFile, string targetFile, ProgressBar bar)
+        void ThreadMethodCompress(object compressFileData)
         {
-            bar.Value = 0;
+            ThreadCompressFileData threadCompressData = (ThreadCompressFileData)compressFileData;
+
             try
             {
-                new Task(() =>
+                threadCompressData.CompressProgressSet.Invoke(0);
+                if (File.Exists(threadCompressData.FileFrom))
+                {
+                    using (FileStream sourceStream = new FileStream(threadCompressData.FileFrom, FileMode.OpenOrCreate))
+                    {
+                        threadCompressData.CompressProgressSet.Invoke(1);
+
+                        using (FileStream targetStream = File.Create(threadCompressData.FileTo))
+                        {
+                            using (GZipStream compressionStream = new GZipStream(targetStream, CompressionMode.Compress))
+                            {
+                                new Task(() =>
+                                {
+                                    long progress = 99;
+                                    long progress_set = 1;
+                                    long source_length = new System.IO.FileInfo(threadCompressData.FileFrom).Length;
+                                    while (true)
+                                    {
+                                        if (progress > 0)
+                                        {
+                                            long compressed_length = new System.IO.FileInfo(threadCompressData.FileTo).Length;
+                                            if ((source_length / progress) < compressed_length)
+                                            {
+                                                threadCompressData.CompressProgressSet.Invoke(++progress_set);
+                                                --progress;
+                                            }
+                                        }
+                                        else
+                                            break;
+                                    }
+                                }).Start();
+                                sourceStream.CopyToAsync(compressionStream).Wait();
+                                threadCompressData.CompressProgressSet.Invoke(100);
+                                MessageBox.Show("File has been compressed!");
+                                threadCompressData.CompressProgressSet.Invoke(0);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    throw new Exception("Compressed file doesn't exist");
+                }
+            }
+            catch(ThreadAbortException)
+            {
+                File.Delete(threadCompressData.FileTo);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+            finally
+            {
+                threadCompressData.CompressProgressSet.Invoke(0);
+            }
+        }
+
+        void ThreadMethodDecompress(object compressFileData)
+        {
+            ThreadCompressFileData threadCompressData = (ThreadCompressFileData)compressFileData;
+
+            try
+            {
+                threadCompressData.CompressProgressSet.Invoke(0);
+                if (File.Exists(threadCompressData.FileFrom))
+                {
+                    using (FileStream sourceStream = new FileStream(threadCompressData.FileFrom, FileMode.OpenOrCreate))
+                    {
+                        threadCompressData.CompressProgressSet.Invoke(1);
+
+                        using (FileStream targetStream = File.Create(threadCompressData.FileTo))
+                        {
+                            using (GZipStream decompressionStream = new GZipStream(sourceStream, CompressionMode.Decompress))
+                            {
+                                new Task(() =>
+                                {
+                                    long progress = 99;
+                                    long progress_set = 1;
+                                    long source_length = new System.IO.FileInfo(threadCompressData.FileFrom).Length;
+                                    while (true)
+                                    {
+                                        if (progress > 0)
+                                        {
+                                            long decompressed_length = new System.IO.FileInfo(threadCompressData.FileTo).Length;
+                                            if ((source_length / progress) > decompressed_length)
+                                            {
+                                                threadCompressData.CompressProgressSet.Invoke(++progress_set);
+                                                --progress;
+                                            }
+                                        }
+                                        else
+                                            break;
+                                    }
+                                }).Start();
+                                decompressionStream.CopyToAsync(targetStream).Wait();
+                                threadCompressData.CompressProgressSet.Invoke(100);
+                                MessageBox.Show("File has been decompressed!");
+                                threadCompressData.CompressProgressSet.Invoke(0);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    throw new Exception("Compressed file doesn't exist");
+                }
+            }
+            catch (ThreadAbortException)
+            {
+                File.Delete(threadCompressData.FileTo);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+            finally
+            {
+                threadCompressData.CompressProgressSet.Invoke(0);
+            }
+        }
+
+        public void Decompress(string compressedFile, string targetFile, ProgressSet progressSet)
+        {
+            try
+            {
+                thread = new Thread(ThreadMethodDecompress);
+                thread.Start(new ThreadCompressFileData() { FileFrom = compressedFile, FileTo = targetFile, CompressProgressSet = progressSet });
+                /* new Task(() =>
                 {
                     if (File.Exists(compressedFile))
                     {
@@ -130,7 +214,8 @@ namespace MiveArchiver
                     {
                         throw new Exception("Compressed file doesn't exist");
                     }
-                }).Start();
+                }).Start(); */
+
             }
             catch (Exception ex)
             {
@@ -138,7 +223,7 @@ namespace MiveArchiver
             }
             finally
             {
-                bar.Value = 0;
+               progressSet(0);
             }
         }
     }
