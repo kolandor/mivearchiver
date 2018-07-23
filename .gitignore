@@ -62,3 +62,10 @@ _ReSharper*/
 #Nuget packages folder
 packages/
 
+/MiveArchiver/bin/Debug/MiveArchiver.exe
+/MiveArchiver/obj/Debug/MiveArchiver.pdb
+/MiveArchiver/obj/Debug/MiveArchiver.exe
+/MiveArchiver/obj/Debug/MiveArchiver.csproj.GenerateResource.Cache
+/MiveArchiver/obj/Debug/MiveArchiver.csproj.FileListAbsolute.txt
+/MiveArchiver/obj/Debug/MiveArchiver.csproj.CoreCompileInputs.cache
+/MiveArchiver/bin/Debug/MiveArchiver.pdb

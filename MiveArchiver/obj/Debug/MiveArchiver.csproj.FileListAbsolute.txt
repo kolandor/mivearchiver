@@ -47,3 +47,4 @@ C:\Users\Nikita\Documents\GitProjects\mivearchiver\MiveArchiver\obj\Debug\MiveAr
 C:\Users\Nikita\Documents\GitProjects\mivearchiver\MiveArchiver\obj\Debug\MiveArchiver.csproj.CoreCompileInputs.cache
 C:\Users\Nikita\Documents\GitProjects\mivearchiver\MiveArchiver\obj\Debug\MiveArchiver.exe
 C:\Users\Nikita\Documents\GitProjects\mivearchiver\MiveArchiver\obj\Debug\MiveArchiver.pdb
+C:\Users\Nikita\Documents\GitProjects\mivearchiver\MiveArchiver\obj\Debug\MiveArchiver.ZipProcessForm.resources

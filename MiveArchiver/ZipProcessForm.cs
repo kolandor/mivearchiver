@@ -105,9 +105,9 @@ namespace MiveArchiver
                 if (folderBrowserDialogue.ShowDialog() == DialogResult.Cancel)
                     throw new CancelException();
 
-                string new_name = Path.GetFileNameWithoutExtension(Path.Combine(folderBrowserDialogue.SelectedPath, opdFileDialogZip.SafeFileName));
+                string newName = Path.GetFileNameWithoutExtension(Path.Combine(folderBrowserDialogue.SelectedPath, opdFileDialogZip.SafeFileName));
 
-                pathToNewFile = Path.Combine(folderBrowserDialogue.SelectedPath, new_name);
+                pathToNewFile = Path.Combine(folderBrowserDialogue.SelectedPath, newName);
 
                 // Creating the unzipped file:
                 IArchiver arch = new Archiver();

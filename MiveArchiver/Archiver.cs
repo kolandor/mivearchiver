@@ -13,21 +13,21 @@ namespace MiveArchiver
 {
     public class Archiver : IArchiver
     {
-        private Thread thread;
+        private Thread archiverThread;
         public void CancelWork()
         {
-            if(thread != null)
+            if(archiverThread != null)
             {
-                thread.Abort();
-                thread = null;
+                archiverThread.Abort();
+                archiverThread = null;
             }
         }
         public void Compress(ThreadCompressFileData threadCompressFileData)
         {
             try
             {
-                thread = new Thread(ThreadMethodCompress);
-                thread.Start(threadCompressFileData);
+                archiverThread = new Thread(ThreadMethodCompress);
+                archiverThread.Start(threadCompressFileData);
             }
             catch (Exception ex)
             {
@@ -59,16 +59,16 @@ namespace MiveArchiver
                                 new Task(() =>
                                 {
                                     long progress = 99;
-                                    long progress_set = 1;
-                                    long source_length = new System.IO.FileInfo(threadCompressData.FileFrom).Length;
+                                    long progressSet = 1;
+                                    long sourceLength = new System.IO.FileInfo(threadCompressData.FileFrom).Length;
                                     while (true)
                                     {
                                         if (progress > 0)
                                         {
-                                            long compressed_length = new System.IO.FileInfo(threadCompressData.FileTo).Length;
-                                            if ((source_length / progress) < compressed_length)
+                                            long compressedLength = new System.IO.FileInfo(threadCompressData.FileTo).Length;
+                                            if ((sourceLength / progress) < compressedLength)
                                             {
-                                                threadCompressData.CompressProgressSet.Invoke(++progress_set);
+                                                threadCompressData.CompressProgressSet.Invoke(++progressSet);
                                                 --progress;
                                             }
                                         }
@@ -124,16 +124,16 @@ namespace MiveArchiver
                                 new Task(() =>
                                 {
                                     long progress = 99;
-                                    long progress_set = 1;
-                                    long source_length = new System.IO.FileInfo(threadCompressData.FileFrom).Length;
+                                    long progressSet = 1;
+                                    long sourceLength = new System.IO.FileInfo(threadCompressData.FileFrom).Length;
                                     while (true)
                                     {
                                         if (progress > 0)
                                         {
-                                            long decompressed_length = new System.IO.FileInfo(threadCompressData.FileTo).Length;
-                                            if ((source_length / progress) > decompressed_length)
+                                            long decompressedLength = new System.IO.FileInfo(threadCompressData.FileTo).Length;
+                                            if ((sourceLength / progress) > decompressedLength)
                                             {
-                                                threadCompressData.CompressProgressSet.Invoke(++progress_set);
+                                                threadCompressData.CompressProgressSet.Invoke(++progressSet);
                                                 --progress;
                                             }
                                         }
@@ -173,8 +173,8 @@ namespace MiveArchiver
         {
             try
             {
-                thread = new Thread(ThreadMethodDecompress);
-                thread.Start(threadCompressFileData);
+                archiverThread = new Thread(ThreadMethodDecompress);
+                archiverThread.Start(threadCompressFileData);
             }
             catch (Exception ex)
             {
